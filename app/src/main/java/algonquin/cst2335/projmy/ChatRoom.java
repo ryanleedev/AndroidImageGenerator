@@ -44,7 +44,6 @@ public class ChatRoom extends AppCompatActivity {
         MessageDatabase db = Room.databaseBuilder(getApplicationContext(), MessageDatabase.class, "database-name").build();
         ChatMessageDAO mDAO = db.cmDAO();
 
-        //        ArrayList<String> messages = new ArrayList<>();
         ChatRoomViewModel chatModel ;
         chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
         chatModel.selectedMessage.observe(this, newMessage -> {

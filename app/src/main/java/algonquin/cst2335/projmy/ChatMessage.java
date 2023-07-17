@@ -27,7 +27,7 @@ public class ChatMessage {
     {
         width = w;
         height = h;
-        url = "https://placebear.com/"+ h +"/"+ w;
+        url = "https://placebear.com/"+ w +"/"+ h;
         isSentButton = sent;
     }
 
