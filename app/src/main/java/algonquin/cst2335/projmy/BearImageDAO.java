@@ -10,10 +10,10 @@ import java.util.List;
 @Dao
 public interface BearImageDAO {
     @Insert
-    public long insertMessage(BearImage m);
+    public long insertImage(BearImage m);
 
     @Query("Select * from BearImage")
-    public List<BearImage> getAllMessages();
+    public List<BearImage> getAllImages();
 
     @Delete
     void deleteMessage(BearImage m);

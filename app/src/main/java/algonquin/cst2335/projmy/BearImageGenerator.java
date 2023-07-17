@@ -24,12 +24,12 @@ import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import algonquin.cst2335.projmy.databinding.ActivityChatRoomBinding;
-import algonquin.cst2335.projmy.databinding.ReceiveMessageBinding;
+import algonquin.cst2335.projmy.databinding.ActivityImageRoomBinding;
+import algonquin.cst2335.projmy.databinding.ImageCardBinding;
 
-public class ChatRoom extends AppCompatActivity {
+public class BearImageGenerator extends AppCompatActivity {
 
-    ActivityChatRoomBinding binding;
+    @NonNull ActivityImageRoomBinding binding;
     private RecyclerView.Adapter myAdapter;
     private int clickpos;
 
@@ -38,16 +38,16 @@ public class ChatRoom extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        MessageDatabase db = Room.databaseBuilder(getApplicationContext(), MessageDatabase.class, "database-name").build();
+        BearImageDatabase db = Room.databaseBuilder(getApplicationContext(), BearImageDatabase.class, "database-name").build();
         BearImageDAO mDAO = db.cmDAO();
 
         //        ArrayList<String> messages = new ArrayList<>();
-        ChatRoomViewModel chatModel ;
-        chatModel = new ViewModelProvider(this).get(ChatRoomViewModel.class);
+        BearImageViewModel chatModel ;
+        chatModel = new ViewModelProvider(this).get(BearImageViewModel.class);
         chatModel.selectedMessage.observe(this, newMessage -> {
 
             chatModel.selectedMessage.observe(this, (newValue) -> {
-                MessageDetailsFragment chatFragment = new MessageDetailsFragment(newValue);
+                BearImageDetailsFragment chatFragment = new BearImageDetailsFragment(newValue);
                 FragmentManager fMgr = getSupportFragmentManager();
 
                 FragmentTransaction tx = fMgr.beginTransaction();
@@ -70,7 +70,7 @@ public class ChatRoom extends AppCompatActivity {
             ArrayList<BearImage> finalMessages2 = messages;
             thread.execute(() ->
             {
-                finalMessages2.addAll( mDAO.getAllMessages() ); //Once you get the data from database
+                finalMessages2.addAll( mDAO.getAllImages() ); //Once you get the data from database
 
                 runOnUiThread( () ->  binding.recycleView.setAdapter( myAdapter )); //You can then load the RecyclerView
             });
@@ -86,7 +86,7 @@ public class ChatRoom extends AppCompatActivity {
             public MyRowHolder(@NonNull View itemView) {
                 super(itemView);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder( ChatRoom.this );
+                AlertDialog.Builder builder = new AlertDialog.Builder( BearImageGenerator.this );
 
                 itemView.setOnLongClickListener(clk -> {
                     int position = getAbsoluteAdapterPosition();
@@ -128,24 +128,24 @@ public class ChatRoom extends AppCompatActivity {
         }
 
 
-        binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
+        binding = ActivityImageRoomBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         ArrayList<BearImage> finalMessages = messages;
 
-        binding.receiveButton.setOnClickListener(click -> {
+        binding.generateButton.setOnClickListener(click -> {
             String input = binding.textInput.getText().toString();
             String height = binding.textInput2.getText().toString();
             boolean type = false;
 
-            BearImage newMessage = new BearImage(input, height, type);
+            BearImage newImage = new BearImage(input, height, type);
 
             Executor thread = Executors.newSingleThreadExecutor();
             thread.execute( () -> {
-                newMessage.id = mDAO.insertMessage(newMessage);
+                newImage.id = mDAO.insertImage(newImage);
             });
 
-            finalMessages.add(newMessage);
+            finalMessages.add(newImage);
             myAdapter.notifyItemInserted(finalMessages.size()-1);
             binding.textInput.setText("");
             binding.textInput2.setText("");
@@ -164,8 +164,8 @@ public class ChatRoom extends AppCompatActivity {
             @Override
             public MyRowHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-                    ReceiveMessageBinding binding =
-                            ReceiveMessageBinding.inflate(getLayoutInflater(), parent, false);
+                    ImageCardBinding binding =
+                            ImageCardBinding.inflate(getLayoutInflater(), parent, false);
                     return new MyRowHolder( binding.getRoot() );
 
             }
@@ -174,7 +174,7 @@ public class ChatRoom extends AppCompatActivity {
             public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
                 holder.messageText.setText("");
                 BearImage obj = finalMessages1.get(position);
-                holder.messageText.setText(obj.getMessage() +"X"+ obj.getTimeSent() + " Bear Imaage");
+                holder.messageText.setText(obj.getWidth() +"X"+ obj.getHeight() + " Bear Imaage");
                 String url = obj.getUrl();
                 Picasso.get().load(url).into(holder.imageView);
 

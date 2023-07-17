@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 
-public class ChatRoomViewModel extends ViewModel {
+public class BearImageViewModel extends ViewModel {
     public MutableLiveData<ArrayList<BearImage>> messages = new MutableLiveData< >();
     public MutableLiveData<BearImage> selectedMessage = new MutableLiveData< >();
 }
