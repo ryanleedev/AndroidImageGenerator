@@ -137,11 +137,11 @@ public class ChatRoom extends AppCompatActivity {
         ArrayList<ChatMessage> finalMessages = messages;
 
         binding.receiveButton.setOnClickListener(click -> {
-            String input = binding.textInput.getText().toString();
+            String width = binding.textInput.getText().toString();
             String height = binding.textInput2.getText().toString();
             boolean type = false;
 
-            ChatMessage newMessage = new ChatMessage(input, height, type);
+            ChatMessage newMessage = new ChatMessage(width, height, type);
 
             Executor thread = Executors.newSingleThreadExecutor();
             thread.execute( () -> {
@@ -177,7 +177,7 @@ public class ChatRoom extends AppCompatActivity {
             public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
                 holder.messageText.setText("");
                 ChatMessage obj = finalMessages1.get(position);
-                holder.messageText.setText(obj.getMessage() +"X"+ obj.getTimeSent() + " Bear Imaage");
+                holder.messageText.setText(obj.getWidth() +"X"+ obj.getHeight() + " Bear Imaage");
                 String url = obj.getUrl();
                 Picasso.get().load(url).into(holder.imageView);
 

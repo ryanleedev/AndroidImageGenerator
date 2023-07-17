@@ -11,11 +11,11 @@ public class ChatMessage {
     @ColumnInfo(name="id")
     public long id;
 
-    @ColumnInfo(name="message")
-    String message;
+    @ColumnInfo(name="width")
+    String width;
 
-    @ColumnInfo(name="TimeSent")
-    String timeSent;
+    @ColumnInfo(name="height")
+    String height;
 
     @ColumnInfo(name="url")
     String url;
@@ -23,22 +23,22 @@ public class ChatMessage {
     @ColumnInfo(name="SendOrReceive")
     boolean isSentButton;
 
-    public ChatMessage(String m, String h, boolean sent)
+    public ChatMessage(String w, String h, boolean sent)
     {
-        message = m;
-        timeSent = h;
-        url = "https://placebear.com/"+ h +"/"+ m;
+        width = w;
+        height = h;
+        url = "https://placebear.com/"+ h +"/"+ w;
         isSentButton = sent;
     }
 
     public ChatMessage()
     {}
 
-    public String getMessage() {
-        return message;
+    public String getWidth() {
+        return width;
     }
-    public String getTimeSent() {
-        return timeSent;
+    public String getHeight() {
+        return height;
     }
     public String getUrl() {return url;}
     public boolean getIsSentButton() {

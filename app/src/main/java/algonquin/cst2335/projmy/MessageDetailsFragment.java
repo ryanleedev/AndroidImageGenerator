@@ -24,7 +24,7 @@ public class MessageDetailsFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         DetailsLayoutBinding binding = DetailsLayoutBinding.inflate(inflater);
 
-        binding.databaseText.setText( "Width = " + selected.message + " Height = " + selected.timeSent );
+        binding.databaseText.setText( "Width = " + selected.width + " Height = " + selected.height );
 
         String url = selected.getUrl();
         Picasso.get().load(url).into(binding.imageView2);
