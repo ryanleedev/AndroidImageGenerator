@@ -20,15 +20,12 @@ import androidx.room.Room;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import algonquin.cst2335.projmy.databinding.ActivityChatRoomBinding;
 import algonquin.cst2335.projmy.databinding.ReceiveMessageBinding;
-import algonquin.cst2335.projmy.databinding.SentMessageBinding;
 
 public class ChatRoom extends AppCompatActivity {
 
@@ -42,7 +39,7 @@ public class ChatRoom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         MessageDatabase db = Room.databaseBuilder(getApplicationContext(), MessageDatabase.class, "database-name").build();
-        ChatMessageDAO mDAO = db.cmDAO();
+        BearImageDAO mDAO = db.cmDAO();
 
         //        ArrayList<String> messages = new ArrayList<>();
         ChatRoomViewModel chatModel ;
@@ -62,15 +59,15 @@ public class ChatRoom extends AppCompatActivity {
 
         });
 
-        ArrayList<ChatMessage> messages;
+        ArrayList<BearImage> messages;
         messages = chatModel.messages.getValue();
 
         if(messages == null)
         {
-            chatModel.messages.postValue( messages = new ArrayList<ChatMessage>());
+            chatModel.messages.postValue( messages = new ArrayList<BearImage>());
 
             Executor thread = Executors.newSingleThreadExecutor();
-            ArrayList<ChatMessage> finalMessages2 = messages;
+            ArrayList<BearImage> finalMessages2 = messages;
             thread.execute(() ->
             {
                 finalMessages2.addAll( mDAO.getAllMessages() ); //Once you get the data from database
@@ -80,7 +77,7 @@ public class ChatRoom extends AppCompatActivity {
         }
 
 
-        ArrayList<ChatMessage> finalMessages3 = messages;
+        ArrayList<BearImage> finalMessages3 = messages;
         class MyRowHolder extends RecyclerView.ViewHolder {
             TextView messageText;
 //            TextView timeText;
@@ -98,7 +95,7 @@ public class ChatRoom extends AppCompatActivity {
                     .setNegativeButton("No", (dialog, cl) -> { })
                     .setPositiveButton("Yes", (dialog, cl) -> {
 
-                        ChatMessage m = finalMessages3.get(position);
+                        BearImage m = finalMessages3.get(position);
 
                         Executor thread = Executors.newSingleThreadExecutor();
                         thread.execute( () -> {
@@ -119,7 +116,7 @@ public class ChatRoom extends AppCompatActivity {
 
                 itemView.setOnClickListener(clk -> {
                     int index = getAbsoluteAdapterPosition();
-                    ChatMessage selectedMessage = finalMessages3.get(index);
+                    BearImage selectedMessage = finalMessages3.get(index);
 
                     chatModel.selectedMessage.postValue( finalMessages3.get(index) );
 
@@ -134,14 +131,14 @@ public class ChatRoom extends AppCompatActivity {
         binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        ArrayList<ChatMessage> finalMessages = messages;
+        ArrayList<BearImage> finalMessages = messages;
 
         binding.receiveButton.setOnClickListener(click -> {
             String input = binding.textInput.getText().toString();
             String height = binding.textInput2.getText().toString();
             boolean type = false;
 
-            ChatMessage newMessage = new ChatMessage(input, height, type);
+            BearImage newMessage = new BearImage(input, height, type);
 
             Executor thread = Executors.newSingleThreadExecutor();
             thread.execute( () -> {
@@ -161,7 +158,7 @@ public class ChatRoom extends AppCompatActivity {
         });
 
 
-        ArrayList<ChatMessage> finalMessages1 = messages;
+        ArrayList<BearImage> finalMessages1 = messages;
         binding.recycleView.setAdapter(myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
             @NonNull
             @Override
@@ -176,7 +173,7 @@ public class ChatRoom extends AppCompatActivity {
             @Override
             public void onBindViewHolder(@NonNull MyRowHolder holder, int position) {
                 holder.messageText.setText("");
-                ChatMessage obj = finalMessages1.get(position);
+                BearImage obj = finalMessages1.get(position);
                 holder.messageText.setText(obj.getMessage() +"X"+ obj.getTimeSent() + " Bear Imaage");
                 String url = obj.getUrl();
                 Picasso.get().load(url).into(holder.imageView);
@@ -190,7 +187,7 @@ public class ChatRoom extends AppCompatActivity {
 
             @Override
             public int getItemViewType(int position){
-                ChatMessage obj = finalMessages1.get(position);
+                BearImage obj = finalMessages1.get(position);
                 if (obj.getIsSentButton() == true)
                     return 1;
                 else

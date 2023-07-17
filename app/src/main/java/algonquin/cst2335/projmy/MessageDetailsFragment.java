@@ -13,9 +13,9 @@ import algonquin.cst2335.projmy.databinding.DetailsLayoutBinding;
 
 public class MessageDetailsFragment extends Fragment {
 
-    ChatMessage selected;
+    BearImage selected;
 
-    public MessageDetailsFragment(ChatMessage m) {
+    public MessageDetailsFragment(BearImage m) {
         selected = m;
     }
 

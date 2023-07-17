@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class ChatMessage {
+public class BearImage {
 
     @PrimaryKey (autoGenerate = true)
     @ColumnInfo(name="id")
@@ -23,7 +23,7 @@ public class ChatMessage {
     @ColumnInfo(name="SendOrReceive")
     boolean isSentButton;
 
-    public ChatMessage(String m, String h, boolean sent)
+    public BearImage(String m, String h, boolean sent)
     {
         message = m;
         timeSent = h;
@@ -31,7 +31,7 @@ public class ChatMessage {
         isSentButton = sent;
     }
 
-    public ChatMessage()
+    public BearImage()
     {}
 
     public String getMessage() {
